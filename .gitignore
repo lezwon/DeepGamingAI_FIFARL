@@ -1,1 +1,8 @@
 *.xml
+__pycache__
+.dist
+.idea
+.vscode
+junk models
+model_*
+img.png

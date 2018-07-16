@@ -1,5 +1,6 @@
 import numpy as np
 import time
+import random
 from getkeys import key_check
 from ExperienceReplay import ExperienceReplay
 
@@ -59,14 +60,14 @@ def train(game, model, epochs, verbose=1):
                 """
                 if np.random.rand() <= epsilon:
                     # Eat something random from the menu
-                    action = int(np.random.randint(0, num_actions, size=1))
+                    action = random.sample(range(num_actions), 2)
                     print('random action')
                 else:
                     # Choose yourself
                     # q contains the expected rewards for the actions
                     q = model.predict(input_tm1)
                     # We pick the action with the highest expected reward
-                    action = np.argmax(q[0])
+                    action = q[0].argsort()[-2:][::-1]
 
                 # apply action, get rewards and new state
                 input_t, reward, game_over = game.act(action)

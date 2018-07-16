@@ -23,6 +23,7 @@ J = 0x24
 H = 0x23
 L = 0x26
 E = 0x12
+S = 0x1F
 
 # C struct redefinitions
 PUL = ctypes.POINTER(ctypes.c_ulong)

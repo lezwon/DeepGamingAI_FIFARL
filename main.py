@@ -16,8 +16,8 @@ def baseline_model(grid_size, num_actions, hidden_size):
     model = Sequential()
     model.add(Dense(hidden_size, input_shape=(grid_size,), activation='relu'))
     model.add(Dense(hidden_size, activation='relu'))
-    model.add(Dense(num_actions))
-    model.compile(sgd(lr=.01), "mse")
+    model.add(Dense(num_actions, activation='softmax'))
+    model.compile(sgd(lr=.01), "categorical_crossentropy")
     return model
 
 
@@ -41,19 +41,20 @@ def load_model():
     return loaded_model
 
 
-# model = baseline_model(grid_size=128, num_actions=4, hidden_size=512)
-model = load_model()
+model = baseline_model(grid_size=128, num_actions=4, hidden_size=512)
+# model = load_model()
 # model.summary()
 
 # necessary evil
-pt.pytesseract.tesseract_cmd = 'C:/Program Files (x86)/Tesseract-OCR/tesseract'
+pt.pytesseract.tesseract_cmd = 'tesseract'
+# pt.pytesseract.tesseract_cmd = 'I:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
 
 game = FIFA()
 print("game object created")
 
 epoch = 1000  # Number of games played in training, I found the model needs about 4,000 games till it plays well
 
-train_mode = 0
+train_mode = 1
 
 if train_mode == 1:
     # Train the model
@@ -64,7 +65,7 @@ else:
     hist = test(game, model, epoch, verbose=1)
 
 print(hist)
-np.savetxt('win_history.txt', hist)
+np.savetxt('win_histo ury.txt', hist)
 plt.plot(moving_average_diff(hist))
 plt.ylabel('Average of victories per game')
 plt.show()
