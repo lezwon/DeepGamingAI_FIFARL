@@ -1,23 +1,31 @@
 import numpy as np
 import pytesseract as pt
 from keras.layers.core import Dense
+from keras.layers import *
 from keras.models import Sequential
 from keras.models import model_from_json
-from keras.optimizers import sgd
+from keras.optimizers import adam
 from matplotlib import pyplot as plt
-
 from FIFA import FIFA
 from train import train
 from test import test
 
+timesteps = 20
+num_actions = 4
+grid_sizs  = 256
 
-def baseline_model(grid_size, num_actions, hidden_size):
-    # setting up the model with keras
+def baseline_model(grid_size, num_actions):
     model = Sequential()
-    model.add(Dense(hidden_size, input_shape=(grid_size,), activation='relu'))
-    model.add(Dense(hidden_size, activation='relu'))
-    model.add(Dense(num_actions, activation='softmax'))
-    model.compile(sgd(lr=.01), "categorical_crossentropy")
+    model.add(InputLayer( batch_input_shape=(None, timesteps, grid_size, grid_size, 3)))
+    model.add(ConvLSTM2D(8, (3, 3), return_sequences = True))
+    model.add(MaxPooling3D((1, 2, 2)))
+    model.add(ConvLSTM2D(8, (3, 3), return_sequences=True))
+    model.add(MaxPooling3D((1, 2, 2)))
+    model.add(TimeDistributed(Flatten()))
+    model.add(TimeDistributed(Dense(32, activation='relu')))
+    model.add(Dropout(0.5))
+    model.add(TimeDistributed(Dense(num_actions, activation='relu')))
+    model.compile(adam(lr=.01), "categorical_crossentropy")
     return model
 
 
@@ -37,15 +45,16 @@ def load_model():
     # load weights into new model
     loaded_model.load_weights("model_epoch1000/model.h5")
     print("Loaded model from disk")
-    loaded_model.compile(loss='mse', optimizer='sgd')
+    loaded_model.compile(loss='mse', optimizer='adam')
     return loaded_model
 
 
-model = baseline_model(grid_size=128, num_actions=4, hidden_size=512)
+model = baseline_model(grid_size=256, num_actions=4)
 # model = load_model()
 # model.summary()
 
 # necessary evil
+
 pt.pytesseract.tesseract_cmd = 'tesseract'
 # pt.pytesseract.tesseract_cmd = 'I:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
 
@@ -65,7 +74,7 @@ else:
     hist = test(game, model, epoch, verbose=1)
 
 print(hist)
-np.savetxt('win_histo ury.txt', hist)
+np.savetxt('win_history.txt', hist)
 plt.plot(moving_average_diff(hist))
 plt.ylabel('Average of victories per game')
 plt.show()
