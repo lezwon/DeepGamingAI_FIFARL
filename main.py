@@ -1,5 +1,7 @@
 import numpy as np
 import pytesseract as pt
+import tensorflow as tf
+# from keras.backend.tensorflow_backend import set_session
 from keras.layers.core import Dense
 from keras.layers import *
 from keras.models import Sequential
@@ -9,8 +11,14 @@ from matplotlib import pyplot as plt
 from FIFA import FIFA
 from train import train
 from test import test
+from keras import backend as K
 
-timesteps = 20
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
+K.set_session(sess)
+
+timesteps = 30
 num_actions = 4
 grid_sizs  = 256
 
@@ -49,21 +57,18 @@ def load_model():
     return loaded_model
 
 
-model = baseline_model(grid_size=256, num_actions=4)
-# model = load_model()
+# model = baseline_model(grid_size=256, num_actions=4)
+model = load_model()
 # model.summary()
 
-# necessary evil
-
 pt.pytesseract.tesseract_cmd = 'tesseract'
-# pt.pytesseract.tesseract_cmd = 'I:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
 
 game = FIFA()
 print("game object created")
 
-epoch = 1000  # Number of games played in training, I found the model needs about 4,000 games till it plays well
+epoch = 100
 
-train_mode = 1
+train_mode = 0
 
 if train_mode == 1:
     # Train the model

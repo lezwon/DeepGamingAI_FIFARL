@@ -1,24 +1,31 @@
 # DeepGamingAI_FIFARL
-Using Reinforcement Learning to play FIFA
+This repositiory contains code to train and run a model on FIFA 18 shooting skills. The model uses a Convolutional LSTM and is trained on a batch of sequences, using Reinforcement Learning. The models performace improves after about 100 epochs and you can start to see better scores.
 
-![alt text](https://media.licdn.com/media/gcrc/dms/image/C4D12AQH9xhKq5UFCKw/article-cover_image-shrink_720_1280/0?e=2127686400&v=beta&t=6DJBw2VQWNeHavXIgGZpIwli3rH1E-fak_dZNG7l36Y)
+## Shots (Before training)
+![Shots before Training](before_train.gif)
 
-# Code Tutorial
-https://medium.com/@chintan.t93/using-deep-q-learning-in-fifa-18-to-perfect-the-art-of-free-kicks-f2e4e979ee66
+## Shots (After training)
+![Shots after Training](after_train.gif)
 
-# Video 
-https://www.youtube.com/watch?v=MasxAN-xZIU
+## Instructions to run
+1. Install requirements
+2. Start game in 1280x720 dimensions in windowed mode (Opens by default in top left corner)
+3. In FIFA 18, choose skill games and choose Bronze shooting.
+4. Toggle the train_mode variable to run in train or test mode.
+5. Run [main.py](main.py)
+6. Make sure to click on FIFA window after starting program
 
-# Setup Requirements
+
+## Note 
+This repository is forked copy with lots of changes. The original was made for free kicks and is available at: [DeepGamingAI_FIFARL](https://github.com/ChintanTrivedi/DeepGamingAI_FIFARL)
+
+## Setup Requirements
 1. OS: Windows (FIFA 18)
 2. Pytesseract
 3. Tensorflow
 4. Keras
 5. MatplotLib
 
-# To run
-Go to the root directory and run main.py in train or test mode.
-Toggle the train_mode variable to run in train or test mode.
-
-# Acknowledgements for code
-https://medium.freecodecamp.org/deep-reinforcement-learning-where-to-start-291fb0058c01
+## Acknowledgements for code
+1. [Chintan Trivedi](https://github.com/ChintanTrivedi)
+2. [Deep Reinforcement Learning](https://medium.freecodecamp.org/deep-reinforcement-learning-where-to-start-291fb0058c01)

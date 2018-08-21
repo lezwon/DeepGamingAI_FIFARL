@@ -76,9 +76,9 @@ class FIFA(object):
         # finally:
         #     print(f'Reward: {reward}')
 
-        if self.score >= 3000 or self.score > self.max_score:
+        if self.score >= 4000 or self.score > self.max_score:
             current_reward = 1
-        elif self.score >= 2500:
+        elif self.score >= 3500:
             current_reward = 0
         else:
             current_reward = -1
@@ -134,9 +134,6 @@ class FIFA(object):
 
         for key in keys_to_press[action]:
             ReleaseKey(key)
-
-        # wait until some time after taking action
-        time.sleep(1)
 
         reward = self.record_score()
         return self.observe()

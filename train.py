@@ -12,7 +12,7 @@ LOG_FILENAME = 'model_epoch1000/train.log'
 num_actions = 4  # [ shoot_low, shoot_high, left_arrow, right_arrow]
 max_memory = 1000  # Maximum number of experiences we are storing
 batch_size = 4  # Number of experiences we use for training per batch
-timesteps = 20
+timesteps = 30
 exp_replay = ExperienceReplay(max_memory=max_memory)
 history_store = []
 
@@ -72,15 +72,6 @@ def train(game, model, epochs, verbose=1):
                 # input_t is a vector containing representing the game screen
                 input_tm1 = input_t
 
-                """
-                We want to avoid that the learner settles on a local minimum.
-                Imagine you are eating in an exotic restaurant. After some experimentation you find 
-                that Penang Curry with fried Tempeh tastes well. From this day on, you are settled, and the only Asian 
-                food you are eating is Penang Curry. How can your friends convince you that there is better Asian food?
-                It's simple: Sometimes, they just don't let you choose but order something random from the menu.
-                Maybe you'll like it.
-                The chance that your friends order for you is epsilon
-                """
                 if np.random.rand() <= epsilon:
                     # Eat something random from the menu
                     action = random.sample(range(num_actions), 2)
@@ -104,10 +95,6 @@ def train(game, model, epochs, verbose=1):
             if reward == 1:
                 win_cnt += 1
 
-            """
-            The experiences < s, a, r, s’ > we make during gameplay are our training data.
-            Here we first save the last experience, and then load a batch of experiences to train our model
-            """
 
             # store experience
             if len(sequence) >= timesteps:

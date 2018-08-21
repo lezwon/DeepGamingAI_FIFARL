@@ -1,7 +1,7 @@
 import numpy as np
 import os
 
-timesteps = 20
+timesteps = 30
 
 class ExperienceReplay(object):
     """

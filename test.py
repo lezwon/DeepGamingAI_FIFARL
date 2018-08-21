@@ -10,7 +10,7 @@ max_memory = 500  # Maximum number of experiences we are storing
 hidden_size = 100  # Size of the hidden layers
 batch_size = 1  # Number of experiences we use for training per batch
 grid_size = 10  # Size of the playing field
-timesteps = 20
+timesteps = 30
 
 def predict(model, state_t):
     input = np.zeros((1, timesteps, ) + state_t.shape)
