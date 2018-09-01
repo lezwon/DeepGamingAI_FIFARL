@@ -55,7 +55,7 @@ class FIFA(object):
             print('exception q-learning reward: ' + str(current_score))
             print(f'Current Score is {current_score}')
 
-    def _get_reward(self):
+    def get_reward(self):
         # screen = self.capture_screen()
         # performance = screen[232:266, 625:765]
         # performance = np.pad(

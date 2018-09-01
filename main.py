@@ -57,8 +57,8 @@ def load_model():
     return loaded_model
 
 
-# model = baseline_model(grid_size=256, num_actions=4)
-model = load_model()
+model = baseline_model(grid_size=256, num_actions=4)
+# model = load_model()
 # model.summary()
 
 pt.pytesseract.tesseract_cmd = 'tesseract'
@@ -68,7 +68,7 @@ print("game object created")
 
 epoch = 100
 
-train_mode = 0
+train_mode = 1
 
 if train_mode == 1:
     # Train the model

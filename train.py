@@ -82,16 +82,15 @@ def train(game, model, epochs, verbose=1):
                     action = predict(model, input_tm1)
                     # We pick the action with the highest expected reward
 
-                # action = predict(model, input_tm1)
 
                 # apply action, get rewards and new state
                 input_t = game.act(action)
                 # If we managed to catch the fruit we add 1 to our win counter
-                sequence.append((input_t, action))
+                sequence.append((input_tm1, action))
                 frame_count += 1
                 print(u'Frame Count: ' + str(frame_count))
 
-            reward = game._get_reward()
+            reward = game.get_reward()
             if reward == 1:
                 win_cnt += 1
 
@@ -100,6 +99,7 @@ def train(game, model, epochs, verbose=1):
             if len(sequence) >= timesteps:
                 np_sequence = np.array(sequence[:timesteps])
             else:
+                #if sequence length is not more then timesteps, then append dummy array at beginning
                 sequence_length = len(sequence)
                 extra = timesteps - sequence_length
                 dummy_image = np.zeros_like(input_t)

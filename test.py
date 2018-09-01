@@ -54,10 +54,6 @@ def test(game, model, epochs, verbose=1):
                 frame_count += 1
                 print(u'Frame Count: ' + str(frame_count))
 
-            reward = game._get_reward()
-            if reward == 1:
-                win_cnt += 1
-
         # menu control
         keys = key_check()
         if 'P' in keys:
