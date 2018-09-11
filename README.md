@@ -1,6 +1,8 @@
 # DeepGamingAI_FIFARL
 This repositiory contains code to train and run a model on FIFA 18 shooting skills. The model uses a Convolutional LSTM and is trained on a batch of sequences, using Reinforcement Learning. The models performace improves after about 100 epochs and you can start to see better scores.
 
+The medium article for this project is available at [Reinforcement Learning with FIFA and Keras](https://medium.com/@lezwoncastellino/reinforcement-learning-with-fifa-and-keras-85ec792e25b2)
+
 ## Shots (Before training)
 ![Shots before Training](before_train.gif)
 
