@@ -56,11 +56,6 @@ def load_model():
     loaded_model.compile(loss='mse', optimizer='adam')
     return loaded_model
 
-
-model = baseline_model(grid_size=256, num_actions=4)
-# model = load_model()
-# model.summary()
-
 pt.pytesseract.tesseract_cmd = 'tesseract'
 
 game = FIFA()
@@ -72,10 +67,12 @@ train_mode = 1
 
 if train_mode == 1:
     # Train the model
+    model = baseline_model(grid_size=256, num_actions=4)
     hist = train(game, model, epoch, verbose=1)
     print("Training done")
 else:
     # Test the model
+    model = load_model()
     hist = test(game, model, epoch, verbose=1)
 
 print(hist)
